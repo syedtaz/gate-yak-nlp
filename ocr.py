@@ -4,7 +4,7 @@ import os
 from csv import writer
 
 RAW_IMAGE_PATH = os.path.join(os.getcwd(), 'cropped')
-DATA_PATH = os.path.join(os.getcwd(), 'data', 'yikyak1.csv')
+DATA_PATH = os.path.join(os.getcwd(), 'data', 'yikyak.csv')
 config = '--psm 6'
 
 f = open(DATA_PATH, 'w')
