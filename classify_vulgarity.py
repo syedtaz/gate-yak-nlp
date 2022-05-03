@@ -2,25 +2,30 @@ import pandas as pd
 from wordcloud import WordCloud as WC
 from matplotlib import pylab as plt
 from collections import Counter
+from nltk.stem import WordNetLemmatizer, SnowballStemmer
 
 # constant
 DATA_FILE = "./data/yikyak.csv"
 VULGARITY_FILES = "swear_voc.txt"
 SUMMARY_FILE = "./analysis/vulgarity_summary.txt"
 WORD_CLOUD = "./analysis/vulgarity_cloud.png"
+stemmer = SnowballStemmer("english")  
+
+def preprocess(text):
+    return stemmer.stem(WordNetLemmatizer().lemmatize(text, pos='v'))
 
 # load vulgarity
 vulgars = set()
 with open(VULGARITY_FILES, "r") as f:
     for line in f:
-        vulgars.add(line.strip())        
+        vulgars.add(preprocess(line.strip()))     
 
 # check if the sentence contains vulgar language
 def is_vulgar(x):
     if not isinstance(x, str):
         return False
     for word in x.split():
-        if word.lower().strip() in vulgars:
+        if preprocess(word) in vulgars:
             return True
     return False
 
@@ -30,7 +35,7 @@ def get_freq_vulgar(yaks):
         if not isinstance(yak, str):
             continue
         for word in yak.split():
-            if word.lower().strip() in vulgars:
+            if preprocess(word) in vulgars:
                 freq.update([word])
     return freq
                 
