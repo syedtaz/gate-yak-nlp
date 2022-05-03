@@ -28,6 +28,7 @@ def crop(arg: Tuple[str, int]):
 
         # Ignore if dividers are not correctly found.
         if h > 400:
+            print(image_path)
             continue
 
         # Crop out the bottom and the upvote button
